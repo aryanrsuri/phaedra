@@ -1,0 +1,49 @@
+/* Reset default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 10pt;
+  margin: 0 4em;
+  width: 600px;
+  font-family: monospace
+}
+
+header {
+  padding: 10px;
+  border-bottom: 1px solid black;
+}
+
+header h1,
+footer p {
+  text-align: left;
+}
+
+main {
+  padding: 10px;
+}
+
+
+p {
+  margin-bottom: 10px;
+}
+
+a {
+  color: #0000cc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}

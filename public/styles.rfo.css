@@ -1,0 +1,38 @@
+body {
+  font-size: 10pt;
+  margin: 0 4em;
+  width: 600px;
+  font-family: monospace
+}
+
+pre {
+  font-size: 1em;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-wrap: pretty;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.docinfo {
+  background-color: #EEE;
+}
+
+.pre {
+  white-space: pre;
+  font-family: monospace;
+}
+
+div.head {
+  width: 100%;
+  min-height: 4rem;
+}
+
+span.h1 {
+  font-weight: bold;
+}
+
+h4 {
+  text-align: center;
+}

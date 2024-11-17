@@ -12,7 +12,7 @@ async function getRfoListItems(): Promise<string> {
     const rfoNumber = entry.key[1];
     const { title } = entry.value;
     items.push(
-      `<li><a href="/rfo/${rfoNumber}">RFO ${rfoNumber}: ${title}</a></li>`,
+      `<a href="/rfo/${rfoNumber}">RFO ${rfoNumber}: ${title}</a><br>`,
     );
   }
 

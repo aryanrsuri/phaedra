@@ -1,7 +1,8 @@
 body {
   font-size: 10pt;
   margin: 0 4em;
-  width: 600px;
+  width: 50vw;
+  max-width: 600px;
   font-family: monospace
 }
 

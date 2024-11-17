@@ -90,10 +90,10 @@ const handler = async (req: Request): Promise<Response> => {
       // Convert metadata to plain text
       const { title, status, date } = rfoMeta.value;
       const metaText = `
-    RFO Number: ${rfoNumber}
-    Title: ${title}
-    Status: ${status}
-    Date: ${date}`;
+  RFO Number: ${rfoNumber}
+  Title: ${title}
+  Status: ${status}
+  Date: ${date}`;
 
       return new Response(metaText, {
         headers: { "Content-Type": "text/plain; charset=utf-8" },

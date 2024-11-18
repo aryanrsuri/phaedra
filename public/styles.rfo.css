@@ -49,3 +49,8 @@ span {
 .category {
   text-align: right;
 }
+
+ul,
+ol {
+  padding-left: 0px;
+}

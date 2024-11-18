@@ -1,0 +1,248 @@
+diff --git a/public/styles.rfo.css b/public/styles.rfo.css
+index de2c74c..7c365b7 100644
+--- a/public/styles.rfo.css
++++ b/public/styles.rfo.css
+@@ -49,3 +49,8 @@ span {
+ .category {
+   text-align: right;
+ }
++
++ul,
++ol {
++  padding-left: 0px;
++}
+diff --git a/server.ts b/server.ts
+index ef69533..aa014a7 100644
+--- a/server.ts
++++ b/server.ts
+@@ -12,6 +12,7 @@ interface rfoKey {
+   date: string;
+   category: string;
+   author: string;
++  tags: string[];
+   amends: string[];
+   is_amended_by: string[];
+ }
+@@ -30,6 +31,37 @@ async function getRfoListItems(): Promise<string> {
+   return items.join("");
+ }
+ 
++async function getTagsListItems(): Promise<Set<string>> {
++  const iterator = KV.list<{ tags: string[] }>({ prefix: ["rfo"] });
++  const items: Set<string> = new Set<string>();
++  for await (const entry of iterator) {
++    const { tags } = entry.value;
++    for await (const tag of tags) {
++      items.add(tag);
++    }
++  }
++
++  return items;
++}
++
++async function getRfoByTag(needle: string): Promise<string> {
++  const iterator = KV.list<{ tags: string[]; title: string }>({
++    prefix: ["rfo"],
++  });
++  const items: string[] = [];
++  for await (const entry of iterator) {
++    const { tags, title } = entry.value;
++    console.log(tags, needle);
++    if (tags.includes(needle)) {
++      items.push(
++        `[<a href="/rfo/${entry.key[1]}">${entry.key[1]} ${title}</a>]<br>`,
++      );
++    }
++  }
++
++  return items.join("");
++}
++
+ const handler = async (req: Request): Promise<Response> => {
+   const url = new URL(req.url);
+   const pathname = url.pathname;
+@@ -41,6 +73,9 @@ const handler = async (req: Request): Promise<Response> => {
+ 
+   // Index route
+   if (pathname === "/") {
++    return serveFile(req, "./src/main.html");
++  }
++  if (pathname === "/index") {
+     return serveFile(req, "./src/index.html");
+   }
+ 
+@@ -55,7 +90,7 @@ const handler = async (req: Request): Promise<Response> => {
+         return new Response("metadata not found", { status: 404 });
+       }
+ 
+-      const { title, status, date, amends, is_amended_by, category } =
++      const { title, status, date, amends, is_amended_by, category, tags } =
+         meta.value;
+ 
+       const essayContent = await Deno.readTextFile(
+@@ -67,7 +102,14 @@ const handler = async (req: Request): Promise<Response> => {
+         ? amends.map((num) => `<a href="rfo/${num}">${num}"</a>`).join(", ")
+         : "None";
+       const is_amended_by_list = (is_amended_by && is_amended_by.length > 0)
+-        ? amends.map((num) => `<a href="rfo/${num}">${num}"</a>`).join(", ")
++        ? is_amended_by.map((num) => `<a href="rfo/${num}">${num}"</a>`).join(
++          ", ",
++        )
++        : "None";
++      const tags_list = (tags && tags.length > 0)
++        ? tags.map((tag) =>
++          `<a href="/tag/${encodeURIComponent(tag)}">${tag}</a>`
++        ).join(", ")
+         : "None";
+ 
+       const responseHtml = template
+@@ -78,6 +120,7 @@ const handler = async (req: Request): Promise<Response> => {
+         .replace(/{{status}}/g, status)
+         .replace(/{{category}}/g, category)
+         .replace(/{{amends}}/g, amends_list)
++        .replace(/{{tags}}/g, tags_list)
+         .replace(/{{is_amended_by}}/g, is_amended_by_list);
+       return new Response(responseHtml, {
+         headers: { "Content-Type": "text/html; charset=utf-8" },
+@@ -116,7 +159,47 @@ const handler = async (req: Request): Promise<Response> => {
+     }
+   }
+ 
+-  // 404 Not Found
++  if (pathname === "/tags") {
++    try {
++      const existingEntry = await getTagsListItems();
++      return new Response(JSON.stringify([...existingEntry]), {
++        headers: { "Content-Type": "text/plain; charset=utf-8" },
++      });
++    } catch (error) {
++      return new Response(JSON.stringify({ error: "Error retrieving tags" }), {
++        status: 500,
++        headers: { "Content-Type": "application/json; charset=utf-8" },
++      });
++    }
++  }
++
++  const tagMatch = pathname.match(/^\/tag\/(.+)$/);
++  if (tagMatch) {
++    const tagName = decodeURIComponent(tagMatch[1]).toLowerCase();
++    try {
++      const rfoByTag = await getRfoByTag(tagName);
++
++      if (!rfoByTag) {
++        return new Response(JSON.stringify({ error: "Tag not found" }), {
++          status: 404,
++          headers: { "Content-Type": "application/json; charset=utf-8" },
++        });
++      }
++
++      return new Response(rfoByTag, {
++        headers: { "Content-Type": "text/html; charset=utf-8" },
++      });
++    } catch (error) {
++      return new Response(
++        JSON.stringify({ error: "Error retrieving RFOs for tag" }),
++        {
++          status: 500,
++          headers: { "Content-Type": "application/json; charset=utf-8" },
++        },
++      );
++    }
++  }
++
+   return new Response("Not Found", { status: 404 });
+ };
+ 
+diff --git a/src/index.html b/src/index.html
+index 0ebec96..dc5ff79 100644
+--- a/src/index.html
++++ b/src/index.html
+@@ -5,40 +5,23 @@
+   <meta charset="UTF-8">
+   <title>Phaedra</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-  <link rel="stylesheet" href="./public/styles.css">
++  <link rel="stylesheet" href="./public/styles.rfo.css">
+   <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+ </head>
+ 
+-<body class="light">
+-  <header>
+-    <h1>Phaedra</h1>
+-  </header>
+-  <main>
+-    <div>
+-      <p>
+-        Is my<sup><a href="https://aryansuri.deno.dev/">1</a></sup> body of work on anything; 
+-        ranging from materials engineering, political thought, book reviews, philosophy or poetry. All of these memos (or documents) will share the same format in a
+-        RFO (Request-For-Opinion) as a rip off of IETF RFC<sup><a href="#2">2</a></sup>.
+-        I am doing this to challenge myself to think deeper, write coherently, about on concept, and challenge the
+-        reader to save themselves from the attention collapse. This is Phaedra.
+-      </p>
+-      <p>
+-        As is implied in the O in RFO, I request for any opinions you may have on my work. I do not believe in comments,
+-        but in thorough critique, which you can reach to me by e-mail<sup><a href="#3">3</a></sup>.
+-      </p>
+-    </div>
+-    <section id="essay">
+-
+-      <label for="essay-list">Entire list of my RFO's so far:</label>
+-      <ul hx-get="/list" hx-trigger="load" hx-target="#essay-list" id="essay-list"></ul>
+-    </section>
+-    <hr>
+-    <sup id="1">1 My website</sup>
+-    <br>
+-    <sup id="2">2 By rip off I mean inspired by</sup>
+-    <br>
+-    <sup id="3">3 ary suri at proton dot me </sup>
+-  </main>
++<body>
++  <div class="head docinfo" style="min-height: 4em">
++    <span>[<a href="/">Phaedra</a>] [<a href="/list">Documents</a>]
++  </div>
++  <ul>
++    <ol>/ -> main</ol>
++    <ol>/index -> index</ol>
++    <ol>/tag/{string} -> List of RFO's associated with said tag</ol>
++    <ol>/tags -> List of all tags used so far </ol>
++    <ol>/rfo/{number} -> RFO document</ol>
++    <ol>/list -> HTML list of all RFO documents</ol>
++    <ol>/metadata/{number}-> Metadata associated with said RFO number </ol>
++  </ul>
+ </body>
+ 
+ </html>
+diff --git a/src/rfo.html b/src/rfo.html
+index c763f45..a53b9e9 100644
+--- a/src/rfo.html
++++ b/src/rfo.html
+@@ -1,5 +1,6 @@
+ <!DOCTYPE html>
+ <html lang="en">
++
+ <head>
+   <meta charset="UTF-8">
+   <title>RFO {{rfoNumber}} - {{title}}</title>
+@@ -9,13 +10,16 @@
+ 
+ <body class="light">
+   <div class="head docinfo">
+-      <span>[<a href="/">Phaedra</a>] [<a href="/list">Documents</a>] [<a href="/metadata/{{rfoNumber}}">Metadata</a>]</span>
++    <span>[<a href="/">Phaedra</a>] [<a href="/list">Documents</a>] [<a
++        href="/metadata/{{rfoNumber}}">Metadata</a>]</span>
+     <span class="state"> {{status}}</span>
+     <span class="category">{{category}}</span>
+   </div>
+   <div class="head ">
+     Request for Opinions: <a href="/rfo/{{rfoNumber}}">{{rfoNumber}}</a>
+     <br>
++    Tags: {{tags}}
++    <br>
+     Patches: {{amends}}
+     <br>
+     Patched by: {{is_amended_by}}
+@@ -31,4 +35,3 @@
+ </body>
+ 
+ </html>
+-

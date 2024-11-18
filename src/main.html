@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Phaedra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./public/styles.css">
+  <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+</head>
+
+<body class="light">
+  <header>
+    <h1>Phaedra</h1>
+
+  </header>
+  <main>
+    <div>
+      <p>
+        Is my<sup><a href="https://aryansuri.deno.dev/">1</a></sup> body of work on anything;
+        ranging from materials engineering, political thought, book reviews, philosophy or poetry. All of these memos
+        (or documents) will share the same format in a
+        RFO (Request-For-Opinion) as a rip off of IETF RFC<sup><a href="#2">2</a></sup>.
+        I am doing this to challenge myself to think deeper, write coherently, about on concept, and challenge the
+        reader to save themselves from the attention collapse. This is Phaedra.
+      </p>
+      <p>
+        As is implied in the O in RFO, I request for any opinions you may have on my work. I do not believe in comments,
+        but in thorough critique, which you can reach to me by e-mail<sup><a href="#3">3</a></sup>.
+      </p>
+    </div>
+    <section id="essay">
+
+      <label for="essay-list">Entire list of my RFO's so far:</label>
+      <ul hx-get="/list" hx-trigger="load" hx-target="#essay-list" id="essay-list"></ul>
+    </section>
+    <hr>
+    <sup id="1">1 My website</sup>
+    <br>
+    <sup id="2">2 By rip off I mean inspired by</sup>
+    <br>
+    <sup id="3">3 ary suri at proton dot me </sup>
+  </main>
+</body>
+
+</html>

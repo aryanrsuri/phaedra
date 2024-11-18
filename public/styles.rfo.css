@@ -5,12 +5,6 @@ body {
   font-family: monospace
 }
 
-
-body.dark {
-  background: #151b23;
-  color: #f5f5f5;
-}
-
 pre {
   margin-top: 0px;
   margin-bottom: 0px;
@@ -28,12 +22,30 @@ h4 {
   text-align: center;
 }
 
+span {
+  padding: 0;
+  margin: 0;
+}
+
 .docinfo {
+  padding: 1pt;
   background-color: #EEE;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 
 .head {
   width: 100%;
-  min-height: 4rem;
+}
+
+.state {
+  text-transform: uppercase;
+  text-align: right;
+  color: #C00;
+}
+
+.category {
+  text-align: right;
 }

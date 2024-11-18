@@ -10,6 +10,7 @@ interface rfoKey {
   title: string;
   status: string;
   date: string;
+  category: string;
   author: string;
   amends: string[];
   is_amended_by: string[];
@@ -53,9 +54,9 @@ const handler = async (req: Request): Promise<Response> => {
       if (!meta.value) {
         return new Response("metadata not found", { status: 404 });
       }
-      const { title, status, date, amends, is_amended_by } = meta.value;
 
-      console.log(meta.value);
+      const { title, status, date, amends, is_amended_by, category } =
+        meta.value;
 
       const essayContent = await Deno.readTextFile(
         `./rfos/${rfoNumber}.htm`,
@@ -75,6 +76,7 @@ const handler = async (req: Request): Promise<Response> => {
         .replace(/{{rfoNumber}}/g, rfoNumber)
         .replace(/{{date}}/g, date)
         .replace(/{{status}}/g, status)
+        .replace(/{{category}}/g, category)
         .replace(/{{amends}}/g, amends_list)
         .replace(/{{is_amended_by}}/g, is_amended_by_list);
       return new Response(responseHtml, {

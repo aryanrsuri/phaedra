@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>RFO {{rfoNumber}} - {{title}}</title>
@@ -9,22 +8,27 @@
 </head>
 
 <body class="light">
-  <div class="head docinfo">[<a href="/">Phaedra</a>] [<a href="/list">Documents</a>] [<a href="/meta/1">Metadata</a>]
+  <div class="head docinfo">
+    <span>[<a href="/">Phaedra</a>] [<a href="/list">Documents</a>] [<a href="/meta/1">Metadata</a>]</span>
+    <span class="state"> {{status}}</span>
+    <span class="category">{{category}}</span>
   </div>
   <div class="head ">
     Request for Opinions: <a href="/rfo/{{rfoNumber}}">{{rfoNumber}}</a>
     <br>
-    Amends: {{amends}}
+    Patches: {{amends}}
     <br>
-    Is Amended By: {{is_amended_by}}
+    Patched by: {{is_amended_by}}
     <br>
-    Published: {{date}}
+    {{date}}
     <h4>{{title}}</h4>
   </div>
   <pre>
     {{content}}
   </pre>
-    <hr>
-    Please critique at, arysuri at proton dot me
+  <hr>
+  Please critique at, arysuri at proton dot me
 </body>
+
 </html>
+

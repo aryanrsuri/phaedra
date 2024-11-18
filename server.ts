@@ -95,7 +95,7 @@ const handler = async (req: Request): Promise<Response> => {
     });
   }
 
-  const metaMatch = pathname.match(/^\/meta\/(\d+)$/);
+  const metaMatch = pathname.match(/^\/metadata\/(\d+)$/);
   if (metaMatch) {
     const rfoNumber = metaMatch[1];
     try {

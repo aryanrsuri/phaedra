@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.171.0/http/server.ts";
 import { serveFile } from "https://deno.land/std@0.171.0/http/file_server.ts";
 
 const KV = await Deno.openKv(
-  "https://api.deno.com/databases/00ca3a2c-a64c-46a0-8c53-2df142e95b54/connect",
+  // "https://api.deno.com/databases/00ca3a2c-a64c-46a0-8c53-2df142e95b54/connect",
 );
 const PORT = 8000;
 

@@ -12,33 +12,28 @@ body.dark {
 }
 
 pre {
-  font-size: 1em;
   margin-top: 0px;
   margin-bottom: 0px;
-  text-wrap: pretty;
   white-space: pre-wrap;
-  word-wrap: break-word;
   overflow-wrap: break-word;
+  text-align: justify;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+h4 {
+  text-align: center;
 }
 
 .docinfo {
   background-color: #EEE;
 }
 
-.pre {
-  white-space: pre;
-  font-family: monospace;
-}
 
-div.head {
+.head {
   width: 100%;
   min-height: 4rem;
-}
-
-span.h1 {
-  font-weight: bold;
-}
-
-h4 {
-  text-align: center;
 }

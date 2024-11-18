@@ -3,25 +3,28 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>RFC {{rfoNumber}} - {{title}}</title>
+  <title>RFO {{rfoNumber}} - {{title}}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/public/styles.rfo.css">
 </head>
 
 <body class="light">
-  <div class="head noprint docinfo">[<a href="/">Phaedra</a>] [<a href="/list">Tracker</a>] [<a
-      href="/rfo/1">Manifesto</a>]</div>
+  <div class="head docinfo">[<a href="/">Phaedra</a>] [<a href="/list">Documents</a>] [<a href="/meta/1">Metadata</a>]
+  </div>
+  <div class="head ">
+    Request for Opinions: <a href="/rfo/{{rfoNumber}}">{{rfoNumber}}</a>
+    <br>
+    Amends: {{amends}}
+    <br>
+    Is Amended By: {{is_amended_by}}
+    <br>
+    Published: {{date}}
+    <h4>{{title}}</h4>
+  </div>
   <pre>
-    {{date}}
-    Request for Opinions: {{rfoNumber}}
-    Author: Aryan Suri
-
-    <h4 class="h1">{{title}}</h4>
-  </pre>
-  <pre class="newpage content">
     {{content}}
   </pre>
-
+    <hr>
+    Please critique at, arysuri at proton dot me
 </body>
-
 </html>

@@ -51,7 +51,6 @@ async function getRfoByTag(needle: string): Promise<string> {
   const items: string[] = [];
   for await (const entry of iterator) {
     const { tags, title } = entry.value;
-    console.log(tags, needle);
     if (tags.includes(needle)) {
       items.push(
         `[<a href="/rfo/${entry.key[1]}">${entry.key[1]} ${title}</a>]<br>`,

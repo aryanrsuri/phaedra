@@ -8,7 +8,6 @@ body {
 pre {
   white-space: pre-line;
   overflow-wrap: break-word;
-  text-align: justify;
 }
 
 a {

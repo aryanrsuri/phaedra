@@ -1,14 +1,82 @@
-TITLE: No more than 255 Characterers
-DATE: MONTH YEAR
-STATUS
- *  Draft,
- *  Published,
- *  Obsolete,
- *  Placeholder
-CATEGORY:
- *  Monograph,
- *  Review (either review of umbrella-ed concepts, or review of a noun )
- *  Abstract (Paragraph to 3 Paragraph length axiomatic text),
- *  Editorial
- *  Patch (Amends things)
- *  Enumeration
+<b>Abstract</b>
+
+Your first thought when reading any document on Phaedra is likely: <i>Why do they look like this</i>? Effectively, there are only two reasons, one trivial and one pedantic. Firstly, I am enamored with the style of clandestine technical reports, whitepapers, grey literature<sup>1</sup>, and most forms of conservative aesthetics to technical writing. In fact, as the term RFO would suggest, I model my style most closely to the impeccable RFC<sup>2</sup> standard by the IEFT and their standards.
+
+There is a more subtle, and personal, reason for this choice of format: I deeply believe that the styling and architecture of the "modern" web contributes to the Complex Attention Collapse of the 21-st century. The amount of flashing lights, bright colours, and unneccessary vampiristic design choices distract from any (minimal) value that the webpage is supposed to provide (See [<a href="/rfo/3">RFO3</a>] for more details). Phaedra moves in opposition to these principles, and effectively is as if a typewritten-technical document was pasted on to the ARPANET<sup>3</sup>  
+
+<b>Page Header</b>
+
+The page header above each RFO contains four links: Phedra (to home), Documents (to list of all RFOs), Metadata (of the current RFO), and Index containing all links on Phaedra. One row below, to the right, is the <b>Status</b> of the document which can be one of the following:
+
+(1) Placeholder, or a document where some morsel of the topic (even just the title) is written.
+(2) Draft, or a document that is more than a placeholder, but needs to be reviewed.
+(3) Published, or a document that is approved post-review.
+(4) Obsolete, or a document that is archived due to myriad errata, opinion change, etc.
+
+The status is important for understanding the temporal context of the document, with the most rapid changes occuring on a placeholder, and no changes ever to be seen on an obsolete document<sup>4</sup>
+
+Once more below holds, again on the right, the category, or type, of the document. The document category shifts the expected format that the document is written in. As this is a nascent parameter<sup>5</sup>, the formats of the documents (per category) will not have much difference between them, as I figure out a concrete writing style being the plain text style here (a RFO patch will be produced once this is complete). The possible categories are
+
+(1) Monograph, or a document focused on one (scholarly or aesthetic) subject, such as this current one.
+(2) Critique, or a document that critiques any N number of degenerate topics.
+(3) Abstract, or a short axiomatic or aphoristic writing.
+(4) Editorial, or a article writting by the editor<sup>6</sup> giving a topical opinion.
+(5) Patch, or a version-control-like update to a finite number of errata/improvements to a given RFO.
+(6) Enumeration, or a list of varying complexity.
+
+<div style="border: 1px solid black; padding: 8pt; display: flex; flex-direction: column">[Pheadra] [Documents] [Metadata] [Index]
+<span style="text-align: right; color: #C00">PUBLISHED</span>
+<span style="text-align: right;">Enumeration</span>
+</div>
+Thus concludes the document info (or .docinfo in CSS)
+
+<b>Document Header</b>
+
+The document header sits below the page header, and contains a more exclusive scope about the RFO. Although all this information can be found in the documents <a href="/metadata/5">metadata</a>, that is in JSON format and useless while reading. Again, this mimics the document header in a traditional RFC document, expect for the addition of <i>tags</i>, which link RFOs with content related to said tag. This is a simple form of crosslinking.
+
+<div style="border: 1px solid black; padding: 8pt;">Request for Opinions: {number}
+Tags: {list of tags that are related to the document's context}
+Patches: {list of RFOs that are patched by this document}
+Patched by: {list of RFOs that patch this document}
+{Month Year}
+</div>
+
+<b>Document Content</b>
+
+Thus begins the content of the document, preceded by the title, text aligned centre and bold. If the document is a <b>monograph</b>, an abstract must follow. Headers are bolded and flush left, like all following text, though headers can be omitted, especially for enumerations, abstracts, and patches. 
+
+<div style="border: 1px solid black; padding: 8pt; display: flex ; flex-direction: column;"> 					
+<span style="text-align: center"><b>Title of Document</b></span>
+<br><b>Header 1 </b>
+Loreum Ispum ... 
+
+<br><b>Header 2 </b>
+Loreum Ispum ... 
+
+<b>(Header 2.1)</b>
+Loreum Ispum ... 
+
+</div>
+
+The example above display the most common form of document, and all documents expect for the Patch is derived from this master format. The patch is experimental, and as such I don't have a standard format yet–A proposal is below. Every patch has its own RFO number since this ensures that every document is its ownread-only master<sup>7</sup>, and everything is documented formally
+
+<div style="border: 1px solid black; padding: 8pt;">--- /rfo/{original_number}
++++ /rfo/{update_number}
+@@ { line numbers to update , or none if this is a pure append } @@
+
+- This line contains a wholly outdated opinion of mine and must be changed to improve the article
++ This line updates the opnion and clarifies my arguement
+
++ This is an update to the article its self, or new information, thus there is nothing to <i> remove </i>
+</div>
+
+Note, that the enclosing div element border is part of the format and will be a part of each RFO Patch.
+
+<hr><small>1 Grey literature is a form of research that is adjecent to academic publishing but technical and abstract in nature.
+2 Request For Comments is a publication series drafted by many Internet setting bodies, seminally ARPANET, now IETF.
+3 ARPANET was the first packet formed network in 1969, developing TCP
+4 I am considering removing the Placeholder status, since a draft describe the same temporal information
+5 And Phaedra as a whole
+6 Editor being me
+7 Typos of any form, length, or complexity will be edited ad hoc on the nominal RFO without note, to avoid death by headaches
+</small>

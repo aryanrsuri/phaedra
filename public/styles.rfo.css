@@ -6,9 +6,7 @@ body {
 }
 
 pre {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  white-space: pre-wrap;
+  white-space: pre-line;
   overflow-wrap: break-word;
   text-align: justify;
 }

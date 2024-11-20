@@ -130,7 +130,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
   }
 
-  if (pathname === "/list") {
+  if (pathname === "/rfos") {
     const listItems = await getRfoListItems();
     return new Response(listItems, {
       headers: { "Content-Type": "text/html; charset=utf-8" },

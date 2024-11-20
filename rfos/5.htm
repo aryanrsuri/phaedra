@@ -8,12 +8,11 @@ There is a more subtle, and personal, reason for this choice of format: I deeply
 
 The page header above each RFO contains four links: Phedra (to home), Documents (to list of all RFOs), Metadata (of the current RFO), and Index containing all links on Phaedra. One row below, to the right, is the <b>Status</b> of the document which can be one of the following:
 
-(1) Placeholder, or a document where some morsel of the topic (even just the title) is written.
-(2) Draft, or a document that is more than a placeholder, but needs to be reviewed.
-(3) Published, or a document that is approved post-review.
-(4) Obsolete, or a document that is archived due to myriad errata, opinion change, etc.
+(1) Draft, or a document that is more than a placeholder, but needs to be reviewed.
+(2) Published, or a document that is approved post-review.
+(3) Obsolete, or a document that is archived due to myriad errata, opinion change, etc.
 
-The status is important for understanding the temporal context of the document, with the most rapid changes occuring on a placeholder, and no changes ever to be seen on an obsolete document<sup>4</sup>
+The status is important for understanding the temporal context of the document. A Draft may and will be changed at any time without note, yet once a draft is review and approved, it becomes <b>published</b> and that RFO number will permanently link to an unchaging<sup>4</sup> document. A published document can be "patched", or amended, by succeeding documents as described in (Patch Document). An obsolete document is as unchanging as a published one, but will not ever be patched,i.e. it is historical.
 
 Once more below holds, again on the right, the category, or type, of the document. The document category shifts the expected format that the document is written in. As this is a nascent parameter<sup>5</sup>, the formats of the documents (per category) will not have much difference between them, as I figure out a concrete writing style being the plain text style here (a RFO patch will be produced once this is complete). The possible categories are
 
@@ -23,6 +22,7 @@ Once more below holds, again on the right, the category, or type, of the documen
 (4) Editorial, or a article writting by the editor<sup>6</sup> giving a topical opinion.
 (5) Patch, or a version-control-like update to a finite number of errata/improvements to a given RFO.
 (6) Enumeration, or a list of varying complexity.
+(7) Artefact, or a tangible by-product of work of a large scope
 
 <div style="border: 1px solid black; padding: 8pt; display: flex; flex-direction: column">[Pheadra] [Documents] [Metadata] [Index]
 <span style="text-align: right; color: #C00">PUBLISHED</span>
@@ -74,11 +74,36 @@ The example above display the most common form of document, and all documents ex
 
 Note, that the enclosing div element border is part of the format and will be a part of each RFO Patch.
 
+<b>(Enumerated Document)</b>
+
+An enumerated document is at its core a cardinal set containing a related list, and thus is formed by the html <\table\> tag. An enumerated document is an exception to the rules of a documents status, as <b> an enumerated document can be published, and updated in content without required patches </b> as a normal list on your task managment app of choice might be.
+
+
+<div style="border: 1px solid black; padding: 8pt; display: flex; flex-direction: column;">
+<span style="text-align: center"><b>Title of Enumerated Document</b></span>
+<br><table>
+<tr>
+<th>Column</th>
+<th>Column</th>
+<th>Column</th>
+</tr>
+<tr>
+<td>Data Associated with said column</td>
+<td>Data Associated with said column</td>
+<td>Data Associated with said column</td>
+</tr>
+
+
+</table>
+</div>
+
+Thus I have formed Phaedra's episteme. 
+
 <hr><small>1 Grey literature is a form of research that is adjecent to academic publishing but technical and abstract in nature.
 2 Request For Comments is a publication series drafted by many Internet setting bodies, seminally ARPANET, now IETF.
-3 ARPANET was the first packet formed network in 1969, developing TCP
-4 I am considering removing the Placeholder status, since a draft describe the same temporal information
-5 And Phaedra as a whole
-6 Editor being me
-7 Typos of any form, length, or complexity will be edited ad hoc on the nominal RFO without note, to avoid death by headaches
+3 ARPANET was the first packet formed network in 1969, developing TCP.
+4 Except for typos, see footnote 7.
+5 And Phaedra as a whole.
+6 Editor being me.
+7 Typos of any form, length, or complexity will be edited ad hoc on the nominal RFO without note, to avoid death by headaches.
 </small>

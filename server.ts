@@ -78,6 +78,10 @@ const handler = async (req: Request): Promise<Response> => {
     return serveFile(req, "./src/index.html");
   }
 
+  if (pathname === "/report") {
+    return serveFile(req, "./src/report.html");
+  }
+
   const rfoMatch = pathname.match(/^\/rfo\/(\d+)$/);
   if (rfoMatch) {
     const rfoNumber = rfoMatch[1];
